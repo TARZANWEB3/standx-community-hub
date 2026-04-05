@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StandX Community Hub — Tarzan Web3</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;0,9..40,800;1,9..40,300&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#f5f3ee;--bg2:#eceae4;--bg3:#e2dfd8;--card:#ffffff;--border:#d8d4cb;--border2:#c8c3b8;
+    --ink:#1a1a18;--ink2:#5a5750;--ink3:#9c9890;--accent:#1a6b3c;--accent2:#14522e;
+    --accentbg:#e8f3ec;--accentbd:#b8dbc6;--tag-blue:#1a3a6b;--tag-bluebg:#e8eef3;
+    --tag-org:#6b3a1a;--tag-orgbg:#f3ebe8;--mono:'DM Mono',monospace;--sans:'Noto Sans','DM Sans',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;}
+  .hero{background:var(--ink);color:#f5f3ee;padding:64px 40px 56px;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 40px,rgba(255,255,255,0.02) 40px,rgba(255,255,255,0.02) 41px);}
+  .hero-inner{max-width:900px;margin:0 auto;position:relative;display:grid;grid-template-columns:1fr 340px;gap:48px;align-items:center;}
+  .hero-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#7a9980;margin-bottom:22px;display:flex;align-items:center;gap:10px;}
+  .hero-eyebrow::before{content:'';display:inline-block;width:24px;height:1px;background:#7a9980;}
+  .hero-title{font-size:clamp(36px,5vw,58px);font-weight:800;line-height:1.1;letter-spacing:-0.02em;margin-bottom:22px;}
+  .hero-title span{color:#4dff7c;}
+  .hero-desc{font-size:15px;color:#a0a09a;line-height:1.75;margin-bottom:30px;font-weight:300;}
+  .hero-bottom{display:flex;align-items:center;flex-wrap:wrap;gap:12px;}
+  .hero-tags{display:flex;flex-wrap:wrap;gap:8px;}
+  .hero-tag{font-family:var(--mono);font-size:11px;padding:5px 12px;border:1px solid rgba(255,255,255,0.12);border-radius:20px;color:rgba(255,255,255,0.5);letter-spacing:0.04em;}
+  .hero-stats{display:flex;flex-direction:column;gap:12px;}
+  .hero-stat-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px 18px;}
+  .hero-stat-label{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#7a9980;margin-bottom:6px;}
+  .hero-stat-value{font-size:14px;font-weight:700;color:#f5f3ee;line-height:1.4;}
+  .hero-stat-sub{font-family:var(--mono);font-size:11px;color:rgba(255,255,255,0.3);margin-top:4px;}
+  .discord-hero-btn{display:inline-flex;align-items:center;gap:8px;background:#5865F2;color:white;font-family:var(--mono);font-size:12px;font-weight:700;padding:10px 18px;border-radius:8px;text-decoration:none;transition:all 0.2s;white-space:nowrap;}
+  .discord-hero-btn:hover{background:#4752C4;transform:translateY(-1px);}
+  .sticky-nav{position:sticky;top:0;z-index:100;background:var(--card);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;padding:0 40px;gap:0;}
+  .nav-btn{font-size:12px;padding:16px 15px;background:none;border:none;border-bottom:2px solid transparent;color:var(--ink3);cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+  .nav-btn:hover{color:var(--ink2);}
+  .nav-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .page{display:none;max-width:900px;margin:0 auto;padding:48px 40px;animation:up 0.25s ease;}
+  .page.active{display:block;}
+  @keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .page-title{font-size:24px;font-weight:800;letter-spacing:-0.02em;margin-bottom:6px;}
+  .page-sub{font-family:var(--mono);font-size:12px;color:var(--ink3);letter-spacing:0.04em;margin-bottom:36px;}
+  .section-label{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;transition:border-color 0.2s,box-shadow 0.2s;}
+  .card:hover{border-color:var(--border2);box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+  .card-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px;}
+  .card-title{font-size:14px;font-weight:700;margin-bottom:8px;}
+  .card-body{font-size:13px;color:var(--ink2);line-height:1.65;margin-bottom:14px;}
+  .tag{display:inline-block;font-family:var(--mono);font-size:10px;padding:3px 8px;border-radius:4px;letter-spacing:0.05em;margin-right:4px;margin-bottom:4px;}
+  .tag-green{background:var(--accentbg);color:var(--accent);border:1px solid var(--accentbd);}
+  .tag-blue{background:var(--tag-bluebg);color:var(--tag-blue);border:1px solid #c8d4e3;}
+  .tag-org{background:var(--tag-orgbg);color:var(--tag-org);border:1px solid #e3cdc8;}
+  .btn-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--accent);text-decoration:none;padding:7px 12px;border:1px solid var(--accentbd);border-radius:6px;background:var(--accentbg);transition:all 0.2s;}
+  .btn-link:hover{background:#d4ede0;border-color:var(--accent);}
+  .divider{border:none;border-top:1px solid var(--border);margin:32px 0;}
+  .notice{background:var(--accentbg);border:1px solid var(--accentbd);border-radius:8px;padding:14px 18px;font-size:13px;color:var(--accent2);line-height:1.6;margin-bottom:24px;}
+  .notice-warn{background:var(--tag-orgbg);border-color:#e3cdc8;color:var(--tag-org);}
+  .squads-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:32px;}
+  .squad-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px;transition:border-color 0.2s,box-shadow 0.2s;}
+  .squad-card:hover{border-color:var(--border2);box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+  .squad-card.featured{border-color:var(--accentbd);background:linear-gradient(135deg,var(--card),var(--accentbg));}
+  .squad-icon{font-size:20px;margin-bottom:10px;}
+  .squad-name{font-size:14px;font-weight:700;margin-bottom:6px;}
+  .squad-desc{font-size:12px;color:var(--ink2);line-height:1.65;}
+  .featured-badge{font-family:var(--mono);font-size:9px;padding:2px 7px;background:var(--accentbg);color:var(--accent);border:1px solid var(--accentbd);border-radius:4px;letter-spacing:0.08em;text-transform:uppercase;margin-left:8px;vertical-align:middle;}
+  .step{display:grid;grid-template-columns:40px 1fr;gap:16px;margin-bottom:28px;align-items:flex-start;}
+  .step-num{width:40px;height:40px;background:var(--ink);color:#f5f3ee;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:14px;font-weight:500;flex-shrink:0;}
+  .step-title{font-size:15px;font-weight:700;margin-bottom:6px;}
+  .step-body{font-size:13px;color:var(--ink2);line-height:1.65;}
+  .portfolio-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:22px 24px;margin-bottom:14px;transition:border-color 0.2s,box-shadow 0.2s;}
+  .portfolio-card:hover{border-color:var(--border2);box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+  .portfolio-type{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px;}
+  .portfolio-title{font-size:15px;font-weight:700;line-height:1.4;margin-bottom:10px;}
+  .portfolio-excerpt{font-size:13px;color:var(--ink2);line-height:1.65;margin-bottom:14px;font-style:italic;border-left:3px solid var(--border2);padding-left:14px;}
+  .portfolio-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  .creators-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px;}
+  .creator-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;transition:border-color 0.2s,box-shadow 0.2s;display:flex;gap:16px;align-items:flex-start;}
+  .creator-card:hover{border-color:var(--border2);box-shadow:0 2px 14px rgba(0,0,0,0.07);}
+  .creator-img{width:60px;height:60px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--border);}
+  .creator-info{flex:1;min-width:0;}
+  .creator-name{font-size:14px;font-weight:700;margin-bottom:2px;}
+  .creator-handle{font-family:var(--mono);font-size:11px;color:var(--accent);margin-bottom:8px;}
+  .creator-squad{font-family:var(--mono);font-size:10px;color:var(--ink3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;}
+  .creator-bio{font-size:12px;color:var(--ink2);line-height:1.6;}
+  .discord-cta{background:var(--ink);border-radius:12px;padding:32px;text-align:center;margin-bottom:32px;position:relative;overflow:hidden;}
+  .discord-cta::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 30px,rgba(255,255,255,0.015) 30px,rgba(255,255,255,0.015) 31px);}
+  .discord-cta-inner{position:relative;}
+  .discord-cta-label{font-family:var(--mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#7a9980;margin-bottom:12px;}
+  .discord-cta-title{font-size:22px;font-weight:800;color:#f5f3ee;margin-bottom:8px;}
+  .discord-cta-desc{font-size:13px;color:#a0a09a;margin-bottom:22px;line-height:1.6;}
+  .discord-btn{display:inline-flex;align-items:center;gap:8px;background:#5865F2;color:white;font-family:var(--mono);font-size:13px;font-weight:700;padding:12px 24px;border-radius:8px;text-decoration:none;transition:all 0.2s;}
+  .discord-btn:hover{background:#4752C4;transform:translateY(-1px);box-shadow:0 4px 16px rgba(88,101,242,0.4);}
+  .author-card{background:var(--ink);color:#f5f3ee;border-radius:12px;padding:28px 32px;display:flex;gap:24px;align-items:flex-start;margin-bottom:32px;}
+  .author-img{width:90px;height:90px;border-radius:50%;object-fit:cover;border:2px solid rgba(77,255,124,0.5);flex-shrink:0;}
+  .author-name{font-size:18px;font-weight:800;margin-bottom:4px;}
+  .author-handle{font-family:var(--mono);font-size:12px;color:#7a9980;margin-bottom:10px;}
+  .author-bio{font-size:13px;color:#a0a09a;line-height:1.65;margin-bottom:14px;font-weight:300;}
+  .author-links{display:flex;gap:10px;flex-wrap:wrap;}
+  .author-link{font-family:var(--mono);font-size:11px;padding:6px 12px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:rgba(255,255,255,0.7);text-decoration:none;transition:all 0.2s;}
+  .author-link:hover{border-color:#4dff7c;color:#4dff7c;}
+  footer{background:var(--ink);color:rgba(255,255,255,0.4);padding:28px 40px;font-family:var(--mono);font-size:11px;letter-spacing:0.06em;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+  footer strong{color:rgba(255,255,255,0.7);}
+  .footer-links{display:flex;gap:16px;}
+  .footer-link{color:rgba(255,255,255,0.4);text-decoration:none;transition:color 0.2s;}
+  .footer-link:hover{color:rgba(255,255,255,0.7);}
+  .toast{position:fixed;bottom:24px;right:24px;background:var(--ink);color:#f5f3ee;font-family:var(--mono);font-size:12px;padding:10px 18px;border-radius:8px;opacity:0;transform:translateY(10px);transition:all 0.3s;pointer-events:none;z-index:999;}
+  .toast.show{opacity:1;transform:translateY(0);}
+  .lang-switcher{position:fixed;top:14px;right:20px;z-index:999;}
+  .lang-select{background:rgba(26,26,24,0.88);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:5px 12px;font-family:var(--mono);font-size:11px;color:#4dff7c;cursor:pointer;backdrop-filter:blur(8px);appearance:none;-webkit-appearance:none;outline:none;transition:border-color 0.2s;}
+  .lang-select:hover{border-color:rgba(255,255,255,0.3);}
+  .lang-select option{background:#1a1a18;color:#f5f3ee;}
+  @media(max-width:680px){
+    .hero{padding:40px 20px;}.hero-inner{grid-template-columns:1fr;gap:32px;}.hero-right{display:none;}
+    .sticky-nav{padding:0 16px;}.page{padding:32px 20px;}.grid-2,.creators-grid{grid-template-columns:1fr;}
+    .author-card{flex-direction:column;align-items:center;text-align:center;}
+    .creator-card{flex-direction:column;align-items:center;text-align:center;}
+    footer{flex-direction:column;text-align:center;padding:24px 20px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="lang-switcher">
+  <select class="lang-select" onchange="if(this.value)window.location.href=this.value">
+    <option value="">🇺🇦 UK</option>
+    <option value="index.html">🇺🇸 EN</option>
+    <option value="pt-br.html">🇧🇷 PT-BR</option>
+    <option value="es.html">🇪🇸 ES</option>
+    <option value="ko.html">🇰🇷 한국어</option>
+  </select>
+</div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-eyebrow">StandX · Спільнотна Інфраструктура</div>
+      <h1 class="hero-title">Твій вхід до<br><span>StandX</span>.</h1>
+      <p class="hero-desc">Шаблони, ресурси, гайди та реальні приклади. Відкритий хаб для всіх, хто хоче зрозуміти, брати участь і робити внесок в екосистему StandX.</p>
+      <div class="hero-bottom">
+        <div class="hero-tags">
+          <span class="hero-tag">Безкоштовно</span>
+          <span class="hero-tag">Без реєстрації</span>
+          <span class="hero-tag">UK · EN · PT-BR</span>
+        </div>
+        <a class="discord-hero-btn" href="https://discord.gg/QkjVSetrup" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.03.056a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+          Приєднатись до Discord
+        </a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-stats">
+        <div class="hero-stat-card"><div class="hero-stat-label">Growth Path</div><div class="hero-stat-value">SEED → SPROUT → FLOWER</div><div class="hero-stat-sub">3 рівні · чиста меритократія</div></div>
+        <div class="hero-stat-card"><div class="hero-stat-label">5 доступних Squad</div><div class="hero-stat-value">Content · Creative · Tech · Outreach · Offline</div><div class="hero-stat-sub">Вибери те, що тобі підходить</div></div>
+        <div class="hero-stat-card"><div class="hero-stat-label">Де все відбувається</div><div class="hero-stat-value">Discord StandX</div><div class="hero-stat-sub">discord.gg/QkjVSetrup</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav class="sticky-nav">
+  <button class="nav-btn active" onclick="switchPage('guide')">Як Почати</button>
+  <button class="nav-btn" onclick="switchPage('assets')">Brand Kit</button>
+  <button class="nav-btn" onclick="switchPage('templates')">Шаблони</button>
+  <button class="nav-btn" onclick="switchPage('portfolio')">Приклади</button>
+  <button class="nav-btn" onclick="switchPage('community')">Спільнота</button>
+  <button class="nav-btn" onclick="switchPage('about')">Про Автора</button>
+</nav>
+
+<div class="page active" id="page-guide">
+  <div class="page-title">Як почати в StandX</div>
+  <div class="page-sub">Гайд для всіх — трейдерів, контент-мейкерів, дослідників і допитливих</div>
+  <div class="notice">📌 Цей хаб для всіх. Незалежно від твого досвіду, тут ти знайдеш шлях до участі та внеску в екосистему StandX.</div>
+  <div class="section-label">Growth Path</div>
+  <div class="card" style="margin-bottom:28px"><div class="card-body" style="margin-bottom:0">Growth Path StandX — це система розвитку спільноти, і все відбувається в Discord StandX. Вона визнає активних учасників ексклюзивними ролями та зростаючими нагородами. Немає єдиного способу робити внесок: система цінує різні профілі — від контент-мейкерів до розробників, організаторів подій, дослідників і локальних амбасадорів.</div></div>
+  <div class="section-label">Покроковий план</div>
+  <div class="step"><div class="step-num">1</div><div><div class="step-title">Накопичи 3 000 Engage Points</div><div class="step-body">Беручи участь у щотижневих подіях, реагуй на оголошення та спілкуйся в чаті. Але найпряміший шлях — створювати контент: StandX має щоденну програму публікацій на X — ринкові інсайти, туторіали, меми, відео та аналізи. Публікуй в X, ділись посиланням в #content-creation у Discord і заробляй поінти за якість. Найкращі контент-мейкери отримують 20–40 поінтів на день і щотижневий shoutout від спільноти. Маючи 3 000 поінтів, зайди до #marketplace та купи роль @Stander.</div></div></div>
+  <div class="step"><div class="step-num">2</div><div><div class="step-title">Подайся на @SEED</div><div class="step-body">Маючи @Stander, подайся на @SEED у каналі #seed-application. Команда перевіряє твою активність. Якщо прийнято — приєднуєшся як офіційний учасник. Якщо ні — можеш подати знову через 2 тижні.</div></div></div>
+  <div class="step"><div class="step-num">3</div><div><div class="step-title">Обери Squad</div><div class="step-body">Відкрий тікет у #support-ticket та назви Squad, який тобі підходить. Кожен Squad має специфічні завдання. Дивись доступні Squad нижче — і пам'ятай, що можеш співпрацювати за межами свого Squad.</div></div></div>
+  <div class="step"><div class="step-num">4</div><div><div class="step-title">Виконуй завдання та підвищуйся до @SPROUT</div><div class="step-body">Завдання є в #task-board. Надсилай у #task-submission. Для підвищення потрібно Engage ≥ 4 000 + критерії свого Squad (дивись секцію нижче). Модератори також оцінюють присутність на сервері.</div></div></div>
+  <div class="step"><div class="step-num">5</div><div><div class="step-title">@FLOWER — найвищий рівень</div><div class="step-body">Зарезервований для тих, хто ініціює проєкти, підвищує стандарти спільноти та будує те, про що ніхто не просив. Чиста меритократія.</div></div></div>
+  <hr class="divider">
+  <div class="section-label">Squad — обери свій</div>
+  <div class="notice" style="margin-bottom:20px">💡 Обирай виходячи з того, що тобі подобається робити, а не того, що здається найлегшим. Найкращий Squad — той, який тримає тебе активним і послідовним.</div>
+  <div class="squads-grid">
+    <div class="squad-card featured"><div class="squad-icon">✍️</div><div class="squad-name">Content / Research <span class="featured-badge">автор хабу</span></div><div class="squad-desc">Статті, туторіали, FAQ, ринковий аналіз, порівняння DEX та гайди для новачків. Для тих, хто любить писати, досліджувати та пояснювати.</div></div>
+    <div class="squad-card"><div class="squad-icon">🎨</div><div class="squad-name">Creative Squad</div><div class="squad-desc">Постери, стікери, відео та візуальні матеріали. Для тих, хто має відчуття дизайну і хоче бачити свою роботу у всіх.</div></div>
+    <div class="squad-card"><div class="squad-icon">🔧</div><div class="squad-name">Tech Support Squad</div><div class="squad-desc">Відповідай на технічні питання, допомагай з реєстрацією в мережі та пиши туторіали. Для тих, хто знає продукт і любить навчати.</div></div>
+    <div class="squad-card"><div class="squad-icon">🤝</div><div class="squad-name">Outreach Squad</div><div class="squad-desc">Зв'язуйся з місцевими KOL, партнерськими спільнотами та координуй партнерства. Для тих, хто має зв'язки та вміє домовлятися.</div></div>
+    <div class="squad-card"><div class="squad-icon">📍</div><div class="squad-name">Offline Squad</div><div class="squad-desc">Організовуй зустрічі, офлайн-заходи та дії локального амбасадора. Для тих, у кого є енергія принести StandX у фізичний світ.</div></div>
+  </div>
+  <hr class="divider">
+  <div class="section-label">Вимоги для @SPROUT</div>
+  <div class="notice" style="margin-bottom:20px">Щоб перейти з SEED до SPROUT, потрібно <strong>Engage ≥ 4 000</strong>, стабільна щоденна активність, дотримання правил спільноти — і виконання специфічних критеріїв свого Squad нижче.</div>
+  <div class="squads-grid">
+    <div class="squad-card featured"><div class="squad-icon">✍️</div><div class="squad-name">Content / Research</div><div class="squad-desc" style="margin-top:8px"><span style="color:var(--accent);font-weight:600">2 оригінальних глибоких матеріали</span> прийнято — ринкові інсайти, аналіз конкурентів, розбір продукту, гайди для новачків або FAQ.</div></div>
+    <div class="squad-card"><div class="squad-icon">🎨</div><div class="squad-name">Creative Squad</div><div class="squad-desc" style="margin-top:8px"><span style="font-weight:600">≥ 4 візуальних матеріали</span> (постери або відео), офіційно прийнятих спільнотою.</div></div>
+    <div class="squad-card"><div class="squad-icon">🔧</div><div class="squad-name">Tech Support Squad</div><div class="squad-desc" style="margin-top:8px"><span style="font-weight:600">≥ 25 технічних питань</span> з відповідями + скриншотами та <span style="font-weight:600">≥ 1 повний туторіал</span> опубліковано.</div></div>
+    <div class="squad-card"><div class="squad-icon">🤝</div><div class="squad-name">Outreach Squad</div><div class="squad-desc" style="margin-top:8px"><span style="font-weight:600">3 локальних KOL або спільноти</span> залучено та запрошено до спільних заходів зі StandX.</div></div>
+    <div class="squad-card"><div class="squad-icon">📍</div><div class="squad-name">Offline Squad</div><div class="squad-desc" style="margin-top:8px"><span style="font-weight:600">2 офлайн-заходи</span> із загальною кількістю понад 100 учасників + <span style="font-weight:600">1 звіт</span> про локальні операції подано.</div></div>
+  </div>
+  <hr class="divider">
+  <div class="discord-cta"><div class="discord-cta-inner"><div class="discord-cta-label">Де все відбувається</div><div class="discord-cta-title">Приєднайся до Discord StandX</div><div class="discord-cta-desc">Заходи, завдання, Squad, shoutouts і вся спільнота — на офіційному сервері. Саме там усе починається.</div><a class="discord-btn" href="https://discord.gg/QkjVSetrup" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.03.056a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>discord.gg/QkjVSetrup</a></div></div>
+</div>
+
+<div class="page" id="page-assets">
+  <div class="page-title">Brand Kit · Візуальні Ресурси</div>
+  <div class="page-sub">Для тих, хто хоче створювати, але не знає, з чого почати візуально</div>
+  <div class="notice">💡 Brand Kit існує для усунення творчих бар'єрів. Якщо маєш контент для створення, але застрягаєш на візуальній частині — ці ресурси вирішать проблему. Фокусуйся на контенті, а візуальне вже готово.</div>
+  <div class="notice" style="margin-top:-12px">📘 Повна документація на <a href="https://www.notion.so/StandX-Community-Brand-Kit-2cf509c0f89780c9a435f005e8afdc08" target="_blank" style="color:var(--accent)">Notion</a> — правила використання, що можна поєднувати, версіонування.</div>
+  <div class="section-label">Вибери тип ресурсу</div>
+  <div class="grid-2">
+    <div class="card"><div class="card-eyebrow">Модульний · Прозорий</div><div class="card-title">🧩 Mascot Assets (Base)</div><div class="card-body">Повне тіло, напівтіло, окрема голова та функціональні пози. PNG з прозорим фоном. Використовуй для поєднання або перепозиціонування маскота у власних лейаутах.</div><div style="margin-bottom:14px"><span class="tag tag-green">Освітні пости</span><span class="tag tag-green">Туторіали</span><span class="tag tag-green">Мініатюри</span></div><a class="btn-link" href="https://drive.google.com/drive/folders/1ToCqBkjKhASrsp6_ZmK2BbqwLXpmXpww?usp=drive_link" target="_blank">↗ Відкрити Drive</a></div>
+    <div class="card"><div class="card-eyebrow">Реакції · Швидке вираження</div><div class="card-title">🎭 Emotions & Reactions</div><div class="card-body">Вирази для швидких реакцій. Включає базові емоції та трейдингові реакції: Bullish, Bearish, GG, Loss, Alert, Idea.</div><div style="margin-bottom:14px"><span class="tag tag-blue">Відповіді Discord</span><span class="tag tag-blue">Коментарі X</span><span class="tag tag-blue">Маркери</span></div><a class="btn-link" href="https://drive.google.com/drive/folders/1iO8iKhDP_QJAWZ1az3PPUevsGl-HabBX?usp=drive_link" target="_blank">↗ Відкрити Drive</a></div>
+    <div class="card"><div class="card-eyebrow">Сторітелінг · Візуальне навчання</div><div class="card-title">🎬 Mascot Scenes & Illustrations</div><div class="card-body">Повні ілюстрації для візуального сторітелінгу. Не модульні — використовуй як є. Доступні в кольорі та ч/б.</div><div style="margin-bottom:14px"><span class="tag tag-org">Довгі наративи</span><span class="tag tag-org">Концептуальний контент</span></div><a class="btn-link" href="https://drive.google.com/drive/folders/1lXJ2A_tSld00dq4eP50n1g55eVLwpG3D?usp=drive_link" target="_blank">↗ Відкрити Drive</a></div>
+    <div class="card"><div class="card-eyebrow">Готово до публікації</div><div class="card-title">📣 Marketing Support Assets</div><div class="card-body">Готові ресурси з фоном та композицією. Без редагування, без кропу — публікуй одразу.</div><div style="margin-bottom:14px"><span class="tag tag-green">Швидкий соціал</span><span class="tag tag-green">Без редагування</span></div><a class="btn-link" href="https://drive.google.com/drive/folders/13cLiJ2XjHvHLzx_44ZVqI4tNPFVJqN0m?usp=drive_link" target="_blank">↗ Відкрити Drive</a></div>
+  </div>
+  <hr class="divider">
+  <div class="card"><div class="card-title">📥 Повний Kit — Корінна папка</div><div class="card-body">Всі категорії в одному місці. Використовуй для перегляду між типами або масового завантаження.</div><br><a class="btn-link" href="https://drive.google.com/drive/folders/1XQbI-u8HCbYtkBHw4VX7QDvduEBu1Wzw?usp=drive_link" target="_blank">↗ Відкрити корінну папку Drive</a></div>
+  <hr class="divider">
+  <div class="notice notice-warn">⚠️ Ресурси створені спільнотою і не представляють офіційних комунікацій StandX. Не використовуй для симуляції офіційних матеріалів або оманливого контенту.</div>
+</div>
+
+<div class="page" id="page-templates">
+  <div class="page-title">Шаблони Контенту</div>
+  <div class="page-sub">Готові структури — заповни поля, адаптуй до свого стилю</div>
+  <div class="notice">💡 Шаблони — це кістяки контенту. Поля, виділені <span style="color:var(--accent);font-weight:600">зеленим</span>, показують, де вставляти текст. Тема і голос — твої, структуру бере на себе шаблон.</div>
+  <div class="card"><div class="card-title">📄 Шаблон освітньої статті</div><div class="card-body">[ЗАГОЛОВОК]<br><br>[КОНТЕКСТ — чому це важливо для трейдерів StandX]<br>1 абзац. Прямо. Без загального вступу.<br><br>---<br><br>[ОСНОВНА КОНЦЕПЦІЯ — пояснена просто]<br>Без зайвого жаргону. Трейдер-початківець має зрозуміти.<br><br>---<br><br>[ЯК ЦЕ ПРАЦЮЄ НА ПРАКТИЦІ]<br>Реальний або гіпотетичний приклад. Показує механізм у дії.<br><br>---<br><br>[ТИПОВА ПОМИЛКА — що більшість розуміє неправильно]<br>Чесно. Прямо.<br><br>---<br><br>[ВИСНОВОК — 2-3 рядки]<br>Завершуй інсайтом, а не похвалою платформи.</div></div>
+</div>
+
+<div class="page" id="page-portfolio">
+  <div class="page-title">Реальні Приклади</div>
+  <div class="page-sub">Приклади того, що було створено для екосистеми StandX</div>
+  <div class="notice">💡 Різні формати, різні мови, різні підходи. Подивись, що можна створити для StandX.</div>
+  <div class="portfolio-card"><div class="portfolio-type">Стаття · X Articles · EN</div><div class="portfolio-title">Why StandX? The structural answer for traders who take execution seriously</div><div class="portfolio-excerpt">Більшість перп-платформ відповідають на те ж питання неправильно: що відбувається з твоїм капіталом, коли ти не в позиції? StandX починає з іншої передумови — чому капітал має зупиняти роботу тільки тому, що ти не в угоді?</div><div class="portfolio-footer"><div><span class="tag tag-green">EN</span><span class="tag tag-blue">Стаття</span><span class="tag tag-org">Позиціонування</span></div><a class="btn-link" href="https://x.com/victordesouza96/status/2034354336025690256" target="_blank">↗ Переглянути в X</a></div></div>
+  <div class="portfolio-card"><div class="portfolio-type">Ринковий Аналіз · Живий · Платформа StandX</div><div class="portfolio-title">Ринковий аналіз на платформі StandX — прокоментований самим трейдером</div><div class="portfolio-excerpt">Реальний аналіз прямо в інтерфейсі StandX, прокоментований Tarzan Web3. Контент, який показує використання платформи в реальному торговому контексті — не просто теорія, а живе виконання.</div><div class="portfolio-footer"><div><span class="tag tag-org">Реальний аналіз</span><span class="tag tag-blue">Торгівля</span><span class="tag tag-green">StandX</span></div><a class="btn-link" href="https://x.com/victordesouza96/status/2023113800002793878" target="_blank">↗ Переглянути в X</a></div></div>
+</div>
+
+<div class="page" id="page-community">
+  <div class="page-title">Спільнота</div>
+  <div class="page-sub">Де все відбувається — і хто будує разом</div>
+  <div class="discord-cta" style="margin-bottom:36px"><div class="discord-cta-inner"><div class="discord-cta-label">Офіційний сервер</div><div class="discord-cta-title">Discord StandX</div><div class="discord-cta-desc">Discord — це місце, де відбуваються завдання, заходи, дискусії та весь прогрес Growth Path. Якщо хочеш справді брати участь — починай тут.</div><a class="discord-btn" href="https://discord.gg/QkjVSetrup" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.03.056a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>discord.gg/QkjVSetrup</a></div></div>
+  <div class="section-label">Творці, які надихають</div>
+  <div class="creators-grid">
+    <div class="creator-card"><div class="creator-info"><div class="creator-name">Aifilho</div><a class="creator-handle" href="https://x.com/FilhoIsmae" target="_blank">@FilhoIsmae</a><div class="creator-squad">Creative Squad</div><div class="creator-bio">Видатний творець Creative Squad. Умілий, інноваційний і завжди готовий допомогти — той, хто підвищує візуальні стандарти спільноти.</div></div></div>
+    <div class="creator-card"><div class="creator-info"><div class="creator-name">Jovan</div><a class="creator-handle" href="https://x.com/JovanNeves" target="_blank">@JovanNeves</a><div class="creator-squad">Content Squad</div><div class="creator-bio">Різносторонній, динамічний і завжди присутній. Jovan легко переходить між форматами — постійна точка відліку для початківців.</div></div></div>
+    <div class="creator-card"><div class="creator-info"><div class="creator-name">Dias</div><a class="creator-handle" href="https://x.com/diaserdropes" target="_blank">@diaserdropes</a><div class="creator-squad">Creative Squad</div><div class="creator-bio">Найяскравіший приклад присутності, стійкості та товариськості. Dias — той, кого хочеш поряд. Творчий, готовий допомогти, завжди відкритий.</div></div></div>
+    <div class="creator-card"><div class="creator-info"><div class="creator-name">Dan</div><a class="creator-handle" href="https://x.com/DanielAnge9499" target="_blank">@DanielAnge9499</a><div class="creator-squad">Creative Squad</div><div class="creator-bio">Природжений художник. Бездоганне мистецтво, відео і контент — Dan є одним із головних орієнтирів у творенні та якості.</div></div></div>
+  </div>
+</div>
+
+<div class="page" id="page-about">
+  <div class="page-title">Про автора</div>
+  <div class="page-sub">Хто побудував цей хаб і чому</div>
+  <div class="author-card">
+    <img class="author-img" src="https://pbs.twimg.com/profile_images/1751021179651489792/8wsPvwAb_400x400.jpg" alt="Tarzan Web3" onerror="this.style.display='none'">
+    <div>
+      <div class="author-name">Tarzan Web3</div>
+      <div class="author-handle">@victordesouza96</div>
+      <div class="author-bio">Трейдер, що орієнтується в ринкових циклах. Навчаюся на графіках, помилках та маленькому чорному маскоті.<br><br>Творець технічного освітнього контенту про DeFi та перп DEX. Sprout у Growth Path StandX, Content / Research Squad. Досвід у CEX (Binance, Bybit), перехід до DeFi perps. Фокус на механіках виконання, DUSD, ринковому аналізі та доступній освіті для трейдерів будь-якого рівня.</div>
+      <div class="author-links"><a class="author-link" href="https://x.com/victordesouza96" target="_blank">↗ X @victordesouza96</a></div>
+    </div>
+  </div>
+  <div class="section-label">Чому існує цей хаб</div>
+  <div class="card" style="margin-bottom:24px"><div class="card-body" style="margin-bottom:0">StandX має активну спільноту і щільну технічну екосистему. Але для нових учасників не було безкоштовної, без логіну, без бар'єрів точки для ознайомлення.<br><br>Цей хаб — така інфраструктура. Шаблони, ресурси, гайд по Squad і реальні приклади — в HTML-файлі, що працює у браузері. Без платного Notion, без реєстрації. Відкритий внесок. Якщо допоміг — значить, воно того варте.</div></div>
+  <div class="notice notice-warn">⚠️ Цей матеріал не представляє офіційних комунікацій StandX. Це ініціатива спільноти.</div>
+</div>
+
+<footer>
+  <div><strong>StandX Community Hub</strong> &nbsp;<span style="opacity:0.5;font-weight:400">v1 · Квітень 2026</span><br>Створено Tarzan Web3 · @victordesouza96 · Ініціатива спільноти</div>
+  <div class="footer-links"><a class="footer-link" href="https://discord.gg/QkjVSetrup" target="_blank">StandX Discord</a><a class="footer-link" href="https://x.com/StandX_Official" target="_blank">X @StandX_Official</a><a class="footer-link" href="https://x.com/victordesouza96" target="_blank">X @victordesouza96</a></div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+  function switchPage(name){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));document.getElementById('page-'+name).classList.add('active');event.target.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+  function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
+</script>
+</body>
+</html>
