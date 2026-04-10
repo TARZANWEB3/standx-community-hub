@@ -137,6 +137,38 @@
     footer{flex-direction:column;text-align:center;padding:24px 20px;}
     .hero-bottom{flex-direction:column;align-items:flex-start;}
   }
+
+  /* INSIGHTS REDIRECT */
+  .insights-redirect {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 36px 32px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .insights-redirect-icon { font-size: 40px; line-height: 1; }
+  .insights-redirect-title { font-size: 18px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+  .insights-redirect-desc { font-size: 13px; color: var(--ink2); line-height: 1.65; max-width: 420px; }
+  .insights-redirect-notice {
+    background: var(--accentbg); border: 1px solid var(--accentbd);
+    border-radius: 8px; padding: 12px 16px;
+    font-family: var(--mono); font-size: 12px; color: var(--accent2);
+    line-height: 1.6; max-width: 480px; letter-spacing: 0.02em;
+  }
+  .insights-redirect-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--ink); color: #f5f3ee;
+    font-family: var(--mono); font-size: 12px; font-weight: 700;
+    padding: 12px 24px; border-radius: 8px;
+    text-decoration: none; letter-spacing: 0.04em;
+    transition: opacity 0.2s; margin-top: 4px;
+  }
+  .insights-redirect-btn:hover { opacity: 0.85; }
+
 </style>
 </head>
 <body>
@@ -198,6 +230,7 @@
   <button class="nav-btn" onclick="switchPage('portfolio')">Referencias</button>
   <button class="nav-btn" onclick="switchPage('community')">Comunidad</button>
   <button class="nav-btn" onclick="switchPage('about')">Sobre el Autor</button>
+  <button class="nav-btn" onclick="switchPage('insights')">Standers Insights</button>
 </nav>
 
 <div class="page active" id="page-guide">
@@ -367,6 +400,22 @@ Práctico, no teórico.
   <div class="card" style="margin-bottom:24px"><div class="card-body" style="margin-bottom:0">StandX tiene una comunidad activa y un ecosistema técnico denso. Pero los recién llegados no tienen un punto de referencia gratuito, sin login, sin barreras.<br><br>Este hub es esa infraestructura. Plantillas, recursos, guía de squads y ejemplos reales — en un archivo HTML que corre en el navegador. Sin Notion de pago, sin registro. Una contribución abierta. Si te ayudó, valió la pena.</div></div>
   <div class="notice notice-warn">⚠️ Este material no representa comunicaciones oficiales de StandX. Es una iniciativa comunitaria.</div>
 </div>
+
+
+<!-- ═══ STANDERS INSIGHTS REDIRECT ═══ -->
+<div class="page" id="page-insights">
+  <div class="page-title">Standers Insights</div>
+  <div class="page-sub">Artículos curados de la comunidad</div>
+
+  <div class="insights-redirect">
+    <div class="insights-redirect-icon">📚</div>
+    <div class="insights-redirect-title">Standers Insights</div>
+    <div class="insights-redirect-notice">📚 Esta sección está disponible solo en inglés. Los artículos son escritos por la comunidad global y han pasado por revisión editorial.</div>
+    <div class="insights-redirect-desc">Haz clic abajo para acceder a la versión completa en inglés.</div>
+    <a class="insights-redirect-btn" href="index.html#" onclick="localStorage.setItem('standx-nav','insights'); return true;">↗ Leer en inglés</a>
+  </div>
+</div>
+
 
 <footer>
   <div><strong>StandX Community Hub</strong> &nbsp;<span style="opacity:0.5;font-weight:400">v1 · Abril 2026</span><br>Creado por Tarzan Web3 · @victordesouza96 · Iniciativa comunitaria</div>
