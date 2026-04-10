@@ -373,6 +373,38 @@
 
 
 
+
+  /* INSIGHTS REDIRECT */
+  .insights-redirect {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 36px 32px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .insights-redirect-icon { font-size: 40px; line-height: 1; }
+  .insights-redirect-title { font-size: 18px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+  .insights-redirect-desc { font-size: 13px; color: var(--ink2); line-height: 1.65; max-width: 420px; }
+  .insights-redirect-notice {
+    background: var(--accentbg); border: 1px solid var(--accentbd);
+    border-radius: 8px; padding: 12px 16px;
+    font-family: var(--mono); font-size: 12px; color: var(--accent2);
+    line-height: 1.6; max-width: 480px; letter-spacing: 0.02em;
+  }
+  .insights-redirect-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--ink); color: #f5f3ee;
+    font-family: var(--mono); font-size: 12px; font-weight: 700;
+    padding: 12px 24px; border-radius: 8px;
+    text-decoration: none; letter-spacing: 0.04em;
+    transition: opacity 0.2s; margin-top: 4px;
+  }
+  .insights-redirect-btn:hover { opacity: 0.85; }
+
 </style>
 </head>
 <body>
@@ -443,6 +475,7 @@
   <button class="nav-btn" onclick="switchPage('portfolio')">Referências</button>
   <button class="nav-btn" onclick="switchPage('community')">Comunidade</button>
   <button class="nav-btn" onclick="switchPage('about')">Sobre o Autor</button>
+  <button class="nav-btn" onclick="switchPage('insights')">Standers Insights</button>
 </nav>
 
 <!-- ═══ COMO COMEÇAR ═══ -->
@@ -901,6 +934,22 @@ Não confundir com:
 
   <div class="notice notice-warn">⚠️ Este material não representa comunicação oficial da StandX. É uma iniciativa da comunidade.</div>
 </div>
+
+
+<!-- ═══ STANDERS INSIGHTS REDIRECT ═══ -->
+<div class="page" id="page-insights">
+  <div class="page-title">Standers Insights</div>
+  <div class="page-sub">Artigos curados da comunidade</div>
+
+  <div class="insights-redirect">
+    <div class="insights-redirect-icon">📚</div>
+    <div class="insights-redirect-title">Standers Insights</div>
+    <div class="insights-redirect-notice">📚 Esta seção está disponível apenas em inglês. Os artigos são escritos pela comunidade global e passaram por revisão editorial.</div>
+    <div class="insights-redirect-desc">Clique abaixo para acessar a versão completa em inglês.</div>
+    <a class="insights-redirect-btn" href="index.html#" onclick="localStorage.setItem('standx-nav','insights'); return true;">↗ Ler em inglês</a>
+  </div>
+</div>
+
 
 <footer>
   <div>
